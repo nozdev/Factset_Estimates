@@ -70,7 +70,7 @@ jobs:
             -i factset_estimates_api-v2.yml `
             -g csharp `
             -o generated-client `
-            --additional-properties=packageName=FactsetEstimatesClient,optionalProjectFile=true
+            --additional-properties=packageName=FactsetEstimatesClient
 
       # ----------------------------------------
       # UPLOAD BOTH ARTIFACTS
