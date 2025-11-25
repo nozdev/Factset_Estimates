@@ -45,7 +45,7 @@ jobs:
             ForEach-Object {
               $text = Get-Content $_.FullName -Raw
               
-              $text = $text -replace '\\&quot;', '"'
+              $text = $text -replace '\\&quot;', '\"'
               Set-Content -Path $_.FullName -Value $text
             }
            # dotnet build
