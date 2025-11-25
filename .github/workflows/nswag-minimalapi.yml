@@ -34,10 +34,20 @@ jobs:
             -g aspnetcore `
             -o generated-api `
             --additional-properties=packageName=FactsetEstimatesApi
-            cd generated-api
-            dotnet build
+            
         shell: pwsh
 
+      - name: Fix invalid escape sequences in all C# files (recursive)
+        shell: pwsh
+        run: |
+          cd generated-api
+          Get-ChildItem -Path . -Recurse -Include *.cs -File |
+            ForEach-Object {
+              $content = Get-Content $_.FullName -Raw
+              $fixed = $content -replace '\\&quot;', '"'
+              Set-Content -Path $_.FullName -Value $fixed
+            }
+            dotnet build
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
