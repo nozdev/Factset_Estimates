@@ -33,7 +33,7 @@ jobs:
             -i factset_estimates_api-v2.yml `
             -g aspnetcore `
             -o generated-api `
-            --additional-properties=packageName=MyApi
+            --additional-properties=packageName=FactsetEstimatesApi
         shell: pwsh
 
       - name: Upload
