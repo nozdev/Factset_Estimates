@@ -23,4 +23,4 @@ jobs:
         run: dotnet restore generated-api/FactsetEstimatesApi.sln
 
       - name: Build Solution
-        run: dotnet build generated-api/src/FactsetEstimatesApi.sln --no-restore --configuration Release
+        run: dotnet build generated-api/FactsetEstimatesApi.sln --no-restore --configuration Release
