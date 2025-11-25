@@ -25,7 +25,7 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install NSwag CLI
+      - name: Install NSwag CLI (Node)
         run: |
           npm install -g nswag
 
@@ -35,7 +35,7 @@ jobs:
           nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
             /output:generated-minimal-api \
-            /ControllerStyle:CSharp \
+            /ControllerStyle:Controller \
             /AspNetNamespace:MyMinimalApi \
             /GenerateEndpoints:true \
             /GenerateImplementation:true \
@@ -52,7 +52,7 @@ jobs:
         run: |
           cd generated-minimal-api
           dotnet new web -n MyMinimalApi --force
-          # Replace the auto-generated Program.cs with the converted one
+          # Replace Program.cs with the converted Minimal API
           mv Program.cs ../generated-minimal-api/Program.cs
           dotnet build
 
