@@ -1,3 +1,4 @@
+
 name: Generate ASP.NET Core Minimal API (NSwag .NET CLI)
 
 on:
@@ -26,13 +27,13 @@ jobs:
       - name: Generate C# Controllers using NSwag
         run: |
 
-            rm -rf generated-minimal-api
+            OUTPUT_DIR=$(pwd)/generated-minimal-api     rm -rf generated-minimal-api
             # Create folder with correct permissions
             mkdir -p generated-minimal-api
             chmod -R 755 generated-minimal-api
             nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
-            /output:generated-minimal-api 
+            /output:$OUTPUT_DIR
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
