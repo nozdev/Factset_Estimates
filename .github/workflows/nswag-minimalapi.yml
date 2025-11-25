@@ -1,10 +1,10 @@
-name: Generate ASP.NET Core Minimal API
+name: Generate ASP.NET Core Minimal API (NSwag)
 
 on:
   push:
     paths:
       - "factset_estimates_api-v2.yml"
-      - ".github/workflows/generate-minimalapi.yml"
+      - ".github/workflows/nswag-minimalapi.yml"
   workflow_dispatch:
 
 jobs:
@@ -15,28 +15,49 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java (required for OpenAPI Generator)
-        uses: actions/setup-java@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          distribution: temurin
-          java-version: '17'
+          node-version: 20
 
-      - name: Install OpenAPI Generator CLI
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install NSwag CLI
         run: |
-          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O openapi-generator-cli.jar
-          echo 'alias openapi-generator="java -jar openapi-generator-cli.jar"' >> $GITHUB_ENV
+          npm install -g nswag
 
-      - name: Generate ASP.NET Core Minimal API
+      - name: Generate C# Controllers using NSwag
         run: |
           mkdir -p generated-minimal-api
-          java -jar openapi-generator-cli.jar generate \
-            -i factset_estimates_api-v2.yml \
-            -g aspnetcore-minimal \
-            -o generated-minimal-api \
-            --additional-properties=packageName=MyMinimalApi
+          nswag openapi2cscontroller \
+            /input:factset_estimates_api-v2.yml \
+            /output:generated-minimal-api \
+            /ControllerStyle:CSharp \
+            /AspNetNamespace:MyMinimalApi \
+            /GenerateEndpoints:true \
+            /GenerateImplementation:true \
+            /RouteNamingStrategy:Generator \
+            /UseCancellationTokens:true
+
+      - name: Install dotnet-script
+        run: dotnet tool install -g dotnet-script
+
+      - name: Convert Controllers to Minimal API
+        run: dotnet-script ConvertToMinimalApi.csx
+
+      - name: Build Minimal API
+        run: |
+          cd generated-minimal-api
+          dotnet new web -n MyMinimalApi --force
+          # Replace the auto-generated Program.cs with the converted one
+          mv Program.cs ../generated-minimal-api/Program.cs
+          dotnet build
 
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
-          name: aspnetcore-minimalapi
+          name: aspnetcore-minimalapi-nswag
           path: generated-minimal-api
