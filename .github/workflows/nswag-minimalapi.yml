@@ -22,17 +22,14 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install NSwag .NET CLI
-        run: dotnet tool install -g NSwag.ConsoleCore
+        run: |
+              dotnet new tool-manifest
+              dotnet tool install NSwag.ConsoleCore --version 14.6.3
+ 
 
       - name: Generate C# Controllers using NSwag
         run: |
-
-            OUTPUT_DIR=$(pwd)/generated-minimal-api   
-            rm -rf generated-minimal-api
-            # Create folder with correct permissions
-            mkdir -p generated-minimal-api
-            chmod -R 755 generated-minimal-api
-            nswag openapi2cscontroller \
+            dotnet tool run nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
             /output:$OUTPUT_DIR
       - name: Upload generated API
