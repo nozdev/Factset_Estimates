@@ -1,4 +1,4 @@
-name: Generate ASP.NET Core API (OpenAPI Generator)
+name: Generate ASP.NET Core API and C# Client (OpenAPI Generator)
 
 on:
   push:
@@ -23,8 +23,12 @@ jobs:
       - name: Install OpenAPI Generator CLI
         run: npm install -g @openapitools/openapi-generator-cli
         shell: pwsh
-      
+
+      # ----------------------------------------
+      # 1. GENERATE ASP.NET CORE API SERVER
+      # ----------------------------------------
       - name: Generate ASP.NET Core API
+        shell: pwsh
         run: |
           Remove-Item -Recurse -Force generated-api -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Path generated-api
@@ -34,23 +38,51 @@ jobs:
             -g aspnetcore `
             -o generated-api `
             --additional-properties=packageName=FactsetEstimatesApi
-            
-        shell: pwsh
 
-      - name: Fix invalid escape sequences in all C# files (recursive)
+      - name: Fix invalid escape sequences in generated C# API files
         shell: pwsh
         run: |
           cd generated-api
           Get-ChildItem -Path . -Recurse -Include *.cs -File |
             ForEach-Object {
               $text = Get-Content $_.FullName -Raw
-              
               $text = $text -replace '\\&quot;', '\"'
               Set-Content -Path $_.FullName -Value $text
             }
-            dotnet run --project src\FactsetEstimatesApi\FactsetEstimatesApi.csproj
-      - name: Upload
+
+      # ----------------------------------------
+      # OPTIONAL: BUILD (if you want validation)
+      # ----------------------------------------
+      - name: Build ASP.NET Core API
+        run: dotnet build generated-api/src/FactsetEstimatesApi/FactsetEstimatesApi.csproj
+        shell: pwsh
+
+      # ----------------------------------------
+      # 2. GENERATE C# OPENAPI CLIENT
+      # ----------------------------------------
+      - name: Generate C# API Client
+        shell: pwsh
+        run: |
+          Remove-Item -Recurse -Force generated-client -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Path generated-client
+
+          openapi-generator-cli generate `
+            -i factset_estimates_api-v2.yml `
+            -g csharp `
+            -o generated-client `
+            --additional-properties=packageName=FactsetEstimatesClient,optionalProjectFile=true
+
+      # ----------------------------------------
+      # UPLOAD BOTH ARTIFACTS
+      # ----------------------------------------
+      - name: Upload ASP.NET Core API
         uses: actions/upload-artifact@v4
         with:
           name: aspnetcore-api
           path: generated-api
+
+      - name: Upload C# Client SDK
+        uses: actions/upload-artifact@v4
+        with:
+          name: csharp-client
+          path: generated-client
