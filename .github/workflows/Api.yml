@@ -20,7 +20,7 @@ jobs:
           dotnet-version: '8.0.x'  # Use latest 8.0 patch
 
       - name: Restore NuGet Packages
-        run: dotnet restore
+        run: dotnet restore generated-api/FactsetEstimatesApi.sln
 
       - name: Build Solution
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build generated-api/src/FactsetEstimatesApi.sln --no-restore --configuration Release
