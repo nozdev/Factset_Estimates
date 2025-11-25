@@ -72,6 +72,11 @@ jobs:
             -o generated-client `
             --additional-properties=packageName=FactsetEstimatesClient
 
+      - name: Run .NET Tests
+        shell: pwsh
+        run: |
+          dotnet test generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj --no-build --verbosity normal
+
       # ----------------------------------------
       # UPLOAD BOTH ARTIFACTS
       # ----------------------------------------
