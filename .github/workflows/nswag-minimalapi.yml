@@ -48,7 +48,7 @@ jobs:
               $text = $text -replace '\\&quot;', '"'
               Set-Content -Path $_.FullName -Value $text
             }
-            dotnet build
+           # dotnet build
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
