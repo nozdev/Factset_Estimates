@@ -32,7 +32,6 @@ jobs:
             /AspNetNamespace:MyMinimalApi \
             /GenerateEndpoints:true \
             /GenerateImplementation:true \
-            /RouteNamingStrategy:Generator \
             /UseCancellationTokens:true
 
       - name: Install dotnet-script
