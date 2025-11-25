@@ -29,22 +29,8 @@ jobs:
           nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
             
-      - name: Install dotnet-script
-        run: dotnet tool install -g dotnet-script
-
-      - name: Convert Controllers to Minimal API
-        run: dotnet-script ConvertToMinimalApi.csx
-
-      - name: Build Minimal API
-        run: |
-          cd generated-minimal-api
-          dotnet new web -n MyMinimalApi --force
-          # Replace auto-generated Program.cs with converted Minimal API
-          mv Program.cs ../generated-minimal-api/Program.cs
-          dotnet build
-
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
           name: aspnetcore-minimalapi-nswag
-          path: generated-minimal-api
+        
