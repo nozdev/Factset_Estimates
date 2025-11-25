@@ -32,7 +32,7 @@ jobs:
             -i factset_estimates_api-v2.yml `
             -g aspnetcore `
             -o generated-minimal-api `
-            --additional-properties=packageName=MyMinimalApi,aspnetCoreVersion=8.0,controllerStyle=Minimal,optionalProjectFile=true
+            --additional-properties=packageName=MyMinimalApi,aspnetCoreVersion=6.0,controllerStyle=Minimal,optionalProjectFile=true
         shell: pwsh
 
       - name: Build generated API
