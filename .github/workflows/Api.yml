@@ -1,4 +1,4 @@
-name: Build .NET Project
+name: Build and Deploy .NET Project
 
 on:
   push:
@@ -7,20 +7,45 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: windows-latest
 
     steps:
+      # 1. Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for pushing to master
 
+      # 2. Setup .NET SDK
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'  # Use latest 8.0 patch
+          dotnet-version: '8.0.x'
 
+      # 3. Restore NuGet packages
       - name: Restore NuGet Packages
         run: dotnet restore generated-api/FactsetEstimatesApi.sln
 
+      # 4. Build the solution in Release mode
       - name: Build Solution
         run: dotnet build generated-api/FactsetEstimatesApi.sln --no-restore --configuration Release
+
+      # 5. Copy Release files to a separate folder
+      - name: Prepare Release Artifacts
+        run: |
+          mkdir release
+          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/* release/
+
+      # 6. Push release folder to master branch
+      - name: Push Release to Master
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout master
+          cp -r release/* .
+          git add .
+          git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
