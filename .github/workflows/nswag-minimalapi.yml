@@ -35,6 +35,7 @@ jobs:
       - name: Build generated API
         run: |
           cd generated-minimal-api
+          cat src/MyMinimalApi/Controllers/ActualsApi.cs
           dotnet build
 
       - name: Upload generated API
