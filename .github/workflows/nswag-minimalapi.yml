@@ -31,7 +31,7 @@ jobs:
         run: |
             dotnet tool run nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
-            /output:$OUTPUT_DIR
+            /output:generated-minimal-api
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
