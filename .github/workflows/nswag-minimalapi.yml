@@ -1,4 +1,4 @@
-name: Generate ASP.NET Core Minimal API (NSwag)
+name: Generate ASP.NET Core Minimal API (NSwag .NET CLI)
 
 on:
   push:
@@ -15,19 +15,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - name: Set up .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install NSwag CLI (Node)
-        run: |
-          npm install -g nswag
+      - name: Install NSwag .NET CLI
+        run: dotnet tool install -g NSwag.ConsoleCore
 
       - name: Generate C# Controllers using NSwag
         run: |
@@ -35,7 +29,7 @@ jobs:
           nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
             /output:generated-minimal-api \
-            /ControllerStyle:Controller \
+            /ControllerStyle:CSharp \
             /AspNetNamespace:MyMinimalApi \
             /GenerateEndpoints:true \
             /GenerateImplementation:true \
@@ -52,7 +46,7 @@ jobs:
         run: |
           cd generated-minimal-api
           dotnet new web -n MyMinimalApi --force
-          # Replace Program.cs with the converted Minimal API
+          # Replace auto-generated Program.cs with converted Minimal API
           mv Program.cs ../generated-minimal-api/Program.cs
           dotnet build
 
