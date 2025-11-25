@@ -1,4 +1,4 @@
-name: Generate ASP.NET Core Minimal API (Windows runner)
+name: Generate ASP.NET Core API (OpenAPI Generator)
 
 on:
   push:
@@ -12,10 +12,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -23,26 +23,21 @@ jobs:
       - name: Install OpenAPI Generator CLI
         run: npm install -g @openapitools/openapi-generator-cli
         shell: pwsh
-
-      - name: Generate ASP.NET Core Minimal API
+      
+      - name: Generate ASP.NET Core API
         run: |
-          Remove-Item -Recurse -Force generated-minimal-api -ErrorAction SilentlyContinue
-          New-Item -ItemType Directory -Path generated-minimal-api
+          Remove-Item -Recurse -Force generated-api -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Path generated-api
+          
           openapi-generator-cli generate `
             -i factset_estimates_api-v2.yml `
             -g aspnetcore `
-            -o generated-minimal-api `
-            --additional-properties=packageName=MyMinimalApi,aspnetCoreVersion=6.0,controllerStyle=Minimal,optionalProjectFile=true
+            -o generated-api `
+            --additional-properties=packageName=MyApi,targetFramework=net8.0
         shell: pwsh
 
-      - name: Build generated API
-        run: |
-          cd generated-minimal-api
-          dotnet build
-        shell: pwsh
-
-      - name: Upload generated API
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: aspnetcore-minimalapi
-          path: generated-minimal-api
+          name: aspnetcore-api
+          path: generated-api
