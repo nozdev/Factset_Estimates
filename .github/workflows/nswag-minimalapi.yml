@@ -25,13 +25,16 @@ jobs:
 
       - name: Generate C# Controllers using NSwag
         run: |
-          mkdir -p generated-minimal-api
-          nswag openapi2cscontroller \
+
+            rm -rf generated-minimal-api
+            # Create folder with correct permissions
+            mkdir -p generated-minimal-api
+            chmod -R 755 generated-minimal-api
+            nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
-            
+            /output:generated-minimal-api 
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
           name: aspnetcore-minimalapi-nswag
-          path: $(pwd)
-        
+          path: generated-minimal-api
