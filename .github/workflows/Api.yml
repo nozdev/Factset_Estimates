@@ -14,12 +14,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.0'  # change to your target version
+          dotnet-version: '8.0.x'  # Use latest 8.0 patch
 
-      - name: Restore Dependencies
+      - name: Restore NuGet Packages
         run: dotnet restore
 
       - name: Build Solution
