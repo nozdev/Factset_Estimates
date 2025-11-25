@@ -35,7 +35,7 @@ foreach (var file in Directory.GetFiles(inputDir, "*.cs"))
         parameters = Regex.Replace(parameters, @"CancellationToken\s+\w+,?", "");
 
         // Map controller action to Minimal API endpoint
-        sb.AppendLine($"app.Map{method.FirstCharToUpper()}(\"{route}\", async ({parameters}) =>");
+        sb.AppendLine($"app.Map{method.ToTitileCase()}(\"{route}\", async ({parameters}) =>");
         sb.AppendLine("{");
         sb.AppendLine($"    // TODO: implement {actionName} logic");
         sb.AppendLine("});");
