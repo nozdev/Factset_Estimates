@@ -1,10 +1,10 @@
-name: Generate ASP.NET Core Minimal API (NSwag)
+name: Generate ASP.NET Core Minimal API
 
 on:
   push:
     paths:
       - "factset_estimates_api-v2.yml"
-      - ".github/workflows/nswag-minimalapi.yml"
+      - ".github/workflows/generate-minimalapi.yml"
   workflow_dispatch:
 
 jobs:
@@ -15,30 +15,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Java (required for OpenAPI Generator)
+        uses: actions/setup-java@v3
         with:
-          node-version: 20
+          distribution: temurin
+          java-version: '17'
 
-      - name: Install NSwag CLI (Node)
+      - name: Install OpenAPI Generator CLI
         run: |
-          npm install -g nswag
+          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.1.0/openapi-generator-cli-7.1.0.jar -O openapi-generator-cli.jar
+          echo 'alias openapi-generator="java -jar openapi-generator-cli.jar"' >> $GITHUB_ENV
 
-      - name: Generate C# Minimal API using NSwag
+      - name: Generate ASP.NET Core Minimal API
         run: |
           mkdir -p generated-minimal-api
-          nswag openapi2cscontroller \
-            /input:factset_estimates_api-v2.yml \
-            /output:generated-minimal-api \
-            /ControllerStyle:MinimalApi \
-            /AspNetNamespace:MyMinimalApi \
-            /GenerateEndpoints:true \
-            /GenerateImplementation:true \
-            /RouteNamingStrategy:Generator \
-            /UseCancellationTokens:true
+          java -jar openapi-generator-cli.jar generate \
+            -i factset_estimates_api-v2.yml \
+            -g aspnetcore-minimal \
+            -o generated-minimal-api \
+            --additional-properties=packageName=MyMinimalApi
 
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
-          name: aspnetcore-minimalapi-nswag
+          name: aspnetcore-minimalapi
           path: generated-minimal-api
