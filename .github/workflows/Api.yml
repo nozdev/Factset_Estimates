@@ -46,6 +46,9 @@ jobs:
           cp -r release/* .
           git add .
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
-          git push origin master
+        
+      - name: Push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT: ${{ secrets.PAT }}  # Your Personal Access Token
+        run: |
+          git push https://x-access-token:${PAT}@github.com/nozdev/Factset_Estimates.git master
