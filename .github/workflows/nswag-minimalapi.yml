@@ -43,9 +43,10 @@ jobs:
           cd generated-api
           Get-ChildItem -Path . -Recurse -Include *.cs -File |
             ForEach-Object {
-              $content = Get-Content $_.FullName -Raw
-              $fixed = $content -replace '\\&quot;', '"'
-              Set-Content -Path $_.FullName -Value $fixed
+              $text = Get-Content $_.FullName -Raw
+              
+              $text = $text -replace '\\&quot;', '"'
+              Set-Content -Path $_.FullName -Value $text
             }
             dotnet build
       - name: Upload
