@@ -26,6 +26,7 @@ jobs:
       - name: Generate C# Controllers using NSwag
         run: |
           mkdir -p generated-minimal-api
+          nswag openapi2cscontroller /help
           nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
             /output:generated-minimal-api \
