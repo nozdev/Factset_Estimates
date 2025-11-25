@@ -28,12 +28,8 @@ jobs:
           mkdir -p generated-minimal-api
           nswag openapi2cscontroller \
             /input:factset_estimates_api-v2.yml \
-            /output:generated-minimal-api \
-            /AspNetNamespace:MyMinimalApi \
-            /GenerateEndpoints:true \
-            /GenerateImplementation:true \
-            /UseCancellationTokens:true
-
+            /output:generated-minimal-api 
+            
       - name: Install dotnet-script
         run: dotnet tool install -g dotnet-script
 
