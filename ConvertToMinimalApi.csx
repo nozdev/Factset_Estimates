@@ -1,6 +1,11 @@
 #r "nuget: Microsoft.CodeAnalysis.CSharp, 4.12.0"
 using System.IO;
 using System.Text.RegularExpressions;
+string FirstCharToUpper(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return input;
+        return input[0].ToString().ToUpper() + input.Substring(1);
+    }
 
 var inputDir = "";       // NSwag output folder
 var outputFile = Path.Combine(inputDir, "Program.cs");
@@ -49,11 +54,7 @@ File.WriteAllText(outputFile, sb.ToString());
 Console.WriteLine($"Minimal API Program.cs generated at: {outputFile}");
 
 // --- Top-level static extension class ---
-static class Ext
-{
-    public static string FirstCharToUpper(this string input)
-    {
-        if (string.IsNullOrEmpty(input)) return input;
-        return input[0].ToString().ToUpper() + input.Substring(1);
-    }
-}
+
+
+    
+
