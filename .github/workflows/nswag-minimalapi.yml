@@ -47,7 +47,7 @@ jobs:
               $fixed = $content -replace '\\&quot;', '"'
               Set-Content -Path $_.FullName -Value $fixed
             }
-            dotnet build
+            # dotnet build
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
