@@ -1,11 +1,10 @@
-
-name: Generate ASP.NET Core Minimal API (NSwag .NET CLI)
+name: Generate ASP.NET Core Minimal API (OpenAPI Generator Node CLI)
 
 on:
   push:
     paths:
       - "factset_estimates_api-v2.yml"
-      - ".github/workflows/nswag-minimalapi.yml"
+      - ".github/workflows/openapi-minimalapi.yml"
   workflow_dispatch:
 
 jobs:
@@ -16,24 +15,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up .NET SDK
-        uses: actions/setup-dotnet@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          dotnet-version: '8.0.x'
+          node-version: 20
 
-      - name: Install NSwag .NET CLI
-        run: |
-              dotnet new tool-manifest
-              dotnet tool install NSwag.ConsoleCore --version 14.6.3
- 
+      - name: Install OpenAPI Generator CLI
+        run: npm install -g @openapitools/openapi-generator-cli
 
-      - name: Generate C# Controllers using NSwag
+      - name: Generate ASP.NET Core Minimal API
         run: |
-            dotnet tool run nswag openapi2cscontroller \
-            /input:factset_estimates_api-v2.yml \
-            /output:generated-minimal-api
+          mkdir -p generated-minimal-api
+          openapi-generator-cli generate \
+            -i factset_estimates_api-v2.yml \
+            -g aspnetcore \
+            -o generated-minimal-api \
+            --additional-properties=packageName=MyMinimalApi,aspnetCoreVersion=6.0,controllerStyle=Minimal,optionalProjectFile=true
+
+      - name: Build generated API
+        run: |
+          cd generated-minimal-api
+          dotnet build
+
       - name: Upload generated API
         uses: actions/upload-artifact@v4
         with:
-          name: aspnetcore-minimalapi-nswag
+          name: aspnetcore-minimalapi
           path: generated-minimal-api
