@@ -43,7 +43,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout master
-          cp -r release .
+          
           git add .
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
         
