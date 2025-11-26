@@ -32,7 +32,7 @@ jobs:
         run: |
           
           dotnet build generated-api/FactsetEstimatesApi.sln --configuration Release --no-restore
-          dotnet publish generated-api/FactsetEstimatesApi/FactsetEstimatesApi.csproj --configuration Release --no-restore
+          dotnet publish generated-api/src/FactsetEstimatesApi/FactsetEstimatesApi.csproj --configuration Release --no-restore
 
 
       # 5. Copy Release files to a separate folder
