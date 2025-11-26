@@ -35,7 +35,7 @@ jobs:
       - name: Prepare Release Artifacts
         run: |
           
-          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 .
+          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0/* .
           
           Remove-Item -Recurse -Force generated-api 
 
