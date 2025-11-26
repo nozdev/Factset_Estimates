@@ -54,7 +54,7 @@ namespace FactsetEstimatesClient.Test.Api
         /// <summary>
         /// Test GetSurprise
         /// </summary>
-        [Fact (Skip = "not implemented")]
+        [Fact]
         public async Task GetSurpriseAsyncTest()
         {
             List<string> ids = default!;
