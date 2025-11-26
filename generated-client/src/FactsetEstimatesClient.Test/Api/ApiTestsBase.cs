@@ -53,8 +53,8 @@ namespace FactsetEstimatesClient.Test.Api
         public static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
             .ConfigureApi((context, services, options) =>
             {
-                string basicTokenUsername1 = context.Configuration["<username>"] ?? throw new Exception("Username not found.");
-                string basicTokenPassword1 = context.Configuration["<password>"] ?? throw new Exception("Password not found.");
+                string basicTokenUsername1 = context.Configuration["Factset:Username"] ?? throw new Exception("Username not found.");
+                string basicTokenPassword1 = context.Configuration["Factset:Password"] ?? throw new Exception("Password not found.");
                 BasicToken basicToken1 = new(basicTokenUsername1, basicTokenPassword1, timeout: TimeSpan.FromSeconds(1));
                 options.AddTokens(basicToken1);
             });
