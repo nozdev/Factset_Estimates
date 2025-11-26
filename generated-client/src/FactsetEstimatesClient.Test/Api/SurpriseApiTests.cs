@@ -60,14 +60,12 @@ namespace FactsetEstimatesClient.Test.Api
             List<string> ids = new() { "AAPL" };
             List<string> metrics = new() { "EPS" };
 
-            // Option<T> inputs (hard-coded)
-            var startDate = Client.Option<DateOnly>.Some(new DateOnly(2022, 1, 1));
-            var endDate = Client.Option<DateOnly>.Some(new DateOnly(2023, 1, 1));
-            var frequency = Client.Option<string>.Some("A");       // Annual
-            var periodicity = Client.Option<string>.Some("Q");    // Quarterly
-            var statistic = Client.Option<string>.Some("MEAN");   // Example stat
-            var currency = Client.Option<string>.Some("USD");     // US Dollars
-            var response = await _instance.GetSurpriseAsync(ids, metrics, startDate, endDate, frequency, periodicity, statistic, currency);
+            var startDate   = new Client.Option<DateOnly>(new DateOnly(2020, 1, 1));
+            var endDate     = new Client.Option<DateOnly>(new DateOnly(2024, 1, 1));
+            var frequency   = new Client.Option<string>("A");      // Annual
+            var periodicity = new Client.Option<string>("Q");      // Quarterly
+            var statistic   = new Client.Option<string>("MEAN");
+            var currency    = new Client.Option<string>("USD");
             var model = response.Ok();
             Assert.IsType<SurpriseResponse>(model);
         }
