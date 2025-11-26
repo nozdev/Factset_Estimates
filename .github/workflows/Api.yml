@@ -45,7 +45,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout master
           
-          git add .
+          git add release
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
         
       - uses: actions/checkout@v3
