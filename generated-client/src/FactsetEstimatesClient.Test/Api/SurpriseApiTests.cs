@@ -83,8 +83,8 @@ namespace FactsetEstimatesClient.Test.Api
             var startDate   = new Client.Option<DateOnly?>(new DateOnly(2020, 1, 1));
             var endDate     = new Client.Option<DateOnly?>(new DateOnly(2024, 1, 1));
 
-            var frequency   = new Client.Option<Frequency?>(Frequency.A);      // Annual
-            var periodicity = new Client.Option<PeriodicitySurprise?>(PeriodicitySurprise.Q);  // Quarterly
+            var frequency   = new Client.Option<Frequency?>(Frequency.AY);      // Annual
+            var periodicity = new Client.Option<PeriodicitySurprise?>(PeriodicitySurprise.QTR);  // Quarterly
 
             var currency    = new Client.Option<string?>("USD");
             var statistic   = new Client.Option<Statistic?>(Statistic.MEAN);
