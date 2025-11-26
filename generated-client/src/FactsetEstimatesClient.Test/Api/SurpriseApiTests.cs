@@ -87,7 +87,7 @@ namespace FactsetEstimatesClient.Test.Api
             var statistic   = new Client.Option<string>("MEAN");
             var currency    = new Client.Option<string>("USD");
 
-            SurpriseRequest surpriseRequest = new(ids,metrics, startDate, endDate, frequency,  periodicity, currency. statistics);
+            SurpriseRequest surpriseRequest = new(ids,metrics, startDate, endDate, frequency,  periodicity, currency, statistics);
             var response = await _instance.GetSurpriseForListAsync(surpriseRequest);
             var model = response.Ok();
             Assert.IsType<SurpriseResponse>(model);
