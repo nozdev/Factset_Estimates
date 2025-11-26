@@ -34,16 +34,16 @@ jobs:
       # 5. Copy Release files to a separate folder
       - name: Prepare Release Artifacts
         run: |
-          mkdir release
-          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 release/
-          dir release
+          
+          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 .
+          
 
       # 6. Push release folder to master branch
       - name: Push Release to Master
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          cd release 
+          
 
           git checkout master
           git add .
