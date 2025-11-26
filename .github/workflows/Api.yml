@@ -35,7 +35,7 @@ jobs:
       - name: Prepare Release Artifacts
         run: |
           mkdir release
-          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0/net8.0 release/
+          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 release/
           dir release
 
       # 6. Push release folder to master branch
@@ -43,8 +43,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout master
           cd release 
+
+          git checkout master
           git add .
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
         
