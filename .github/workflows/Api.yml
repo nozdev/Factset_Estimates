@@ -37,6 +37,7 @@ jobs:
           
           cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 .
           
+          Remove-Item -Recurse -Force generated-api 
 
       # 6. Push release folder to master branch
       - name: Push Release to Master
