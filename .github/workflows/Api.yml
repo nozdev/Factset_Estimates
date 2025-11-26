@@ -35,8 +35,8 @@ jobs:
       - name: Prepare Release Artifacts
         run: |
           mkdir release
-          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 release/
-          dir release/net8.0
+          cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0/net8.0 release/
+          dir release
 
       # 6. Push release folder to master branch
       - name: Push Release to Master
