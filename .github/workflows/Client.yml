@@ -26,5 +26,5 @@ jobs:
         run: |
           $env:Factset__Username="myuser"
           $env:Factset__Password="mypassword"
-          dotnet generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
+          dotnet test generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
 
