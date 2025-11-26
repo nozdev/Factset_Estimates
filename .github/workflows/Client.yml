@@ -17,12 +17,6 @@ jobs:
         with:
           fetch-depth: 0  # needed for pushing to master
 
-      # 2. Setup .NET SDK
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-
       # 3. Restore NuGet packages
       - name: Restore NuGet Packages
         run: dotnet restore generated-client/FactsetEstimatesClient.sln
