@@ -66,7 +66,7 @@ namespace FactsetEstimatesClient.Test.Api
             var periodicity = new Client.Option<string>("Q");      // Quarterly
             var statistic   = new Client.Option<string>("MEAN");
             var currency    = new Client.Option<string>("USD");
-            var response = await _instance.GetSurpriseAsync(ids, metrics, startDate, endDate, frequency, periodicity, statistic, currency);
+            var response = await _instance.GetSurpriseAsync(ids, metrics, startDate, endDate, frequency, periodicity, currency statistic);
             var model = response.Ok();
             Assert.IsType<SurpriseResponse>(model);
         }
