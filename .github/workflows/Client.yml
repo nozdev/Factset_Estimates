@@ -1,0 +1,35 @@
+name: Build and Test .NET Project
+
+on:
+  push:
+    branches:
+      - client
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for pushing to master
+
+      # 2. Setup .NET SDK
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      # 3. Restore NuGet packages
+      - name: Restore NuGet Packages
+        run: dotnet restore generated-client/FactsetEstimatesClient.sln
+
+      # 4. Build the solution in Release mode
+      - name: Test Solution
+        run: |
+          
+          dotnet test generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
+
