@@ -57,14 +57,16 @@ namespace FactsetEstimatesClient.Test.Api
         [Fact]
         public async Task GetSurpriseAsyncTest()
         {
-            List<string> ids = default!;
-            List<string> metrics = default!;
-            Client.Option<DateOnly> startDate = default!;
-            Client.Option<DateOnly> endDate = default!;
-            Client.Option<string> frequency = default!;
-            Client.Option<string> periodicity = default!;
-            Client.Option<string> statistic = default!;
-            Client.Option<string> currency = default!;
+            List<string> ids = new() { "AAPL" };
+            List<string> metrics = new() { "EPS" };
+
+            // Option<T> inputs (hard-coded)
+            var startDate = Client.Option<DateOnly>.Some(new DateOnly(2022, 1, 1));
+            var endDate = Client.Option<DateOnly>.Some(new DateOnly(2023, 1, 1));
+            var frequency = Client.Option<string>.Some("A");       // Annual
+            var periodicity = Client.Option<string>.Some("Q");    // Quarterly
+            var statistic = Client.Option<string>.Some("MEAN");   // Example stat
+            var currency = Client.Option<string>.Some("USD");     // US Dollars
             var response = await _instance.GetSurpriseAsync(ids, metrics, startDate, endDate, frequency, periodicity, statistic, currency);
             var model = response.Ok();
             Assert.IsType<SurpriseResponse>(model);
