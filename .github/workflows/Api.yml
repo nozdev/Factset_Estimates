@@ -36,7 +36,7 @@ jobs:
         run: |
           mkdir release
           cp -r generated-api/src/FactsetEstimatesApi/bin/Release/net8.0 release/
-          dir release
+          dir release/net8.0
 
       # 6. Push release folder to master branch
       - name: Push Release to Master
