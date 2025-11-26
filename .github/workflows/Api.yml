@@ -29,7 +29,11 @@ jobs:
 
       # 4. Build the solution in Release mode
       - name: Build Solution
-        run: dotnet build generated-api/FactsetEstimatesApi.sln --no-restore --configuration Release
+        run: |
+          
+          dotnet build generated-api/FactsetEstimatesApi.sln --configuration Release --no-restore
+          dotnet publish generated-api/FactsetEstimatesApi/FactsetEstimatesApi.csproj --configuration Release --no-restore
+
 
       # 5. Copy Release files to a separate folder
       - name: Prepare Release Artifacts
