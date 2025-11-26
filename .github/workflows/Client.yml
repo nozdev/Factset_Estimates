@@ -24,6 +24,7 @@ jobs:
       # 4. Build the solution in Release mode
       - name: Test Solution
         run: |
-          
-          dotnet test --Factset:Username=myuser --Factset:Password=mypassword generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
+          $env:Factset__Username="myuser"
+          $env:Factset__Password="mypassword"
+          dotnet generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
 
