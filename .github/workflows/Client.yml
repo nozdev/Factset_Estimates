@@ -25,5 +25,5 @@ jobs:
       - name: Test Solution
         run: |
           
-          dotnet test generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
+          dotnet test --Factset:Username=myuser --Factset:Password=mypassword generated-client/src/FactsetEstimatesClient.Test/FactsetEstimatesClient.Test.csproj
 
