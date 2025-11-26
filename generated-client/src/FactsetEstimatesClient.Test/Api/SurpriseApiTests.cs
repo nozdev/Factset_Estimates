@@ -77,7 +77,7 @@ namespace FactsetEstimatesClient.Test.Api
         [Fact]
         public async Task GetSurpriseForListAsyncTest()
         {
-            SurpriseRequest surpriseRequest = default!;
+            SurpriseRequest surpriseRequest = new();
             var response = await _instance.GetSurpriseForListAsync(surpriseRequest);
             var model = response.Ok();
             Assert.IsType<SurpriseResponse>(model);
