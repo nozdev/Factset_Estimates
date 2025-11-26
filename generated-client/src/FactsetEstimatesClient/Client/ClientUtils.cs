@@ -308,7 +308,7 @@ namespace FactsetEstimatesClient.Client
         /// <summary>
         /// The base path of the API
         /// </summary>
-        public const string BASE_ADDRESS = "https://api.factset.com/content";
+        public const string BASE_ADDRESS = "https://factset-estimates-api.runasp.net/content";
 
         /// <summary>
         /// The scheme of the API
@@ -323,7 +323,7 @@ namespace FactsetEstimatesClient.Client
         /// <summary>
         /// The host of the API
         /// </summary>
-        public const string HOST = "api.factset.com";
+        public const string HOST = "factset-estimates-api.runasp.net";
 
         /// <summary>
         /// The format to use for DateTime serialization
