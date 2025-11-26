@@ -74,7 +74,7 @@ namespace FactsetEstimatesClient.Test.Api
         /// <summary>
         /// Test GetSurpriseForList
         /// </summary>
-        [Fact (Skip = "not implemented")]
+        [Fact]
         public async Task GetSurpriseForListAsyncTest()
         {
             SurpriseRequest surpriseRequest = default!;
