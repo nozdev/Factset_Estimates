@@ -47,9 +47,9 @@ jobs:
           git add .
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
         
+      - uses: actions/checkout@v3
+        with:
+         token: ${{ secrets.PAT_TOKEN }}
+
       - name: Push changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git
-          git push origin master
+        run: git push origin master
