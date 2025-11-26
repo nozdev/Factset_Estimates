@@ -44,8 +44,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout master
-          
-          git add release/net8.0
+          cd release 
+          git add .
           git commit -m "Update Release from generated-api-client build" || echo "No changes to commit"
         
       - uses: actions/checkout@v3
